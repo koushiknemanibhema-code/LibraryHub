@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Essential for proper mobile scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LibraryHub</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #eef3f8;
+      color: #0f172a;
+      line-height: 1.5;
+      overflow-x: hidden; /* Prevents horizontal scrollbar on phone */
+    }
+
+    header {
+      background-color: #0b3c8c;
+      color: #ffffff;
+      width: 100%;
+      padding: 14px 5%;
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-light {
+      background-color: #f1f5f9;
+      color: #0b3c8c;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-amber {
+      background-color: #eab308;
+      color: #0f172a;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 36px 5%;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 32px;
+      align-items: start;
+      margin-bottom: 48px;
+    }
+
+    .hero-content h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .hero-content p {
+      color: #475569;
+      font-size: 1rem;
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    .filter-card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .input-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      background: #f8fafc;
+    }
+
+    .input-box label {
+      display: block;
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .input-box select,
+    .input-box input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #0f172a;
+      outline: none;
+    }
+
+    .summary-card {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .summary-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #64748b;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .summary-list {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .summary-list li {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 12px;
+    }
+
+    .summary-list li span {
+      font-weight: 400;
+      color: #64748b;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background-color: #0b3c8c;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+    
+      .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .booking-card {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .booking-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      color: #0f172a;
+    }
+
+    .booking-card p {
+      font-size: 0.92rem;
+      color: #64748b;
+    }
+
+    .booking-card .btn-primary {
+      align-self: flex-start;
+      padding: 9px 18px;
+      font-size: 0.88rem;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .panel-card {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .panel-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+      color: #0f172a;
+    }
+
+    .week-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+
+    .day-pill {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 6px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #475569;
+    }
+
+    .day-pill strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-top: 4px;
+      color: #0f172a;
+    }
+
+    .day-pill.active {
+      background: #0b3c8c;
+      border-color: #0b3c8c;
+      color: #ffffff;
+    }
+
+    .day-pill.active strong {
+      color: #ffffff;
+    }
+
+    .queue-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .queue-item {
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .queue-info h4 {
+      font-size: 0.95rem;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .queue-info span {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .badge {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-free {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .badge-booked {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .calendar-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-right {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .nav-links {
+        gap: 14px;
+      }
+
+      .hero-content h1 {
+        font-size: 1.85rem;
+      }
+
+      .filter-card {
+        grid-template-columns: 1fr;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .week-days {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <a href="#" class="logo">LibraryHub</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Seats</a></li>
+          <li><a href="#">Resources</a></li>
+          <li><a href="#">My Bookings</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+        <div class="nav-buttons">
+          <button class="btn-light" onclick="alert('Redirecting to Booking Page...')">Book Now</button>
+          <button class="btn-amber" onclick="alert('Redirecting to Sign Page...')">Sign Up</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Reserve library seats and resources in seconds with LibraryHub</h1>
+        <p>
+          Discover available study spaces, book equipment, manage reservations,
+          and stay updated with instant availability details.
+        </p>
+
+        <div class="filter-card">
+          <div class="input-box">
+            <label>Campus</label>
+            <select>
+              <option>Main Library</option>
+              <option>Science Block</option>
+              <option>Engineering Block</option>
+            </select>
+          </div>
+          <div class="input-box">
+            <label>Date</label>
+            <input type="date" value="2026-11-10" />
+          </div>
+          <div class="input-box">
+            <label>Time</label>
+            <select>
+              <option>9:00 AM - 12:00 PM</option>
+              <option>12:00 PM - 3:00 PM</option>
+              <option>3:00 PM - 6:00 PM</option>
+            </select>
+          </div>
+          <div class="input-box">
+            <label>Study Space</label>
+            <select>
+              <option>Study Seat</option>
+              <option>Quiet Zone Carrel</option>
+              <option>Group Study Room</option>
+            </select>
+          </div>
+          <div class="input-box">
+            <label>Labs &amp; Studios</label>
+            <select>
+              <option>Computer Lab</option>
+              <option>Media/Podcast Studio</option>
+              <option>Presentation Room</option>
+            </select>
+          </div>
+          <div class="input-box">
+            <label>Equipment &amp; Tech</label>
+            <select>
+              <option>None</option>
+              <option>Projector & Screens</option>
+              <option>VR / Electronics Kits</option>
+              <option>Laptop Rental</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <aside class="summary-card">
+        <div class="summary-title">Booking Summary</div>
+        <ul class="summary-list">
+          <li>Main Library</li>
+          <li>2026-11-10</li>
+          <li>9:00 AM - 12:00 PM</li>
+          <li>Study Seat 13</li>
+          <li>Computer Lab</li>
+          <li>No Equipment & Tech</li>
+          <li>Service Fee: <span>$0.00</span></li>
+        </ul>
+        <button class="btn-primary btn-full" onclick="alert('Your Booking is Confirmed')">Confirm Booking</button>
+      </aside>
+    </section>
+
+    <section>
+      <h2 class="section-title">Popular Bookings</h2>
+      <div class="cards-grid">
+        <div class="booking-card">
+          <div>
+            <h3>Study Seat</h3>
+            <p>Reserve a quiet study seat in the library.</p>
+          </div>
+          <button class="btn-primary" onclick="alert('Study Seat selected')">Book Now</button>
+        </div>
+
+        <div class="booking-card">
+          <div>
+            <h3>Computer Lab</h3>
+            <p>Access high-performance computers for your projects.</p>
+          </div>
+          <button class="btn-primary" onclick="alert('Computer Lab selected')">Book Now</button>
+        </div>
+
+        <div class="booking-card">
+          <div>
+            <h3>Group Study Room</h3>
+            <p>Collaborate with your peers in a private study room.</p>
+          </div>
+          <button class="btn-primary" onclick="alert('Group Study Room selected')">Book Now</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Availability Calendar</h2>
+      <div class="calendar-grid">
+        <div class="panel-card">
+          <h3>This Week</h3>
+          <div class="week-days">
+            <div class="day-pill" onclick="alert('Checking availability for Monday')">Mon<strong>9</strong></div>
+            <div class="day-pill active" onclick="alert('Checking availability for Tuesday')">Tue<strong>10</strong></div>
+            <div class="day-pill" onclick="alert('Checking availability for Wednesday')">Wed<strong>11</strong></div>
+            <div class="day-pill" onclick="alert('Checking availability for Thursday')">Thu<strong>12</strong></div>
+            <div class="day-pill" onclick="alert('Checking availability for Friday')">Fri<strong>13</strong></div>
+            <div class="day-pill" onclick="alert('Checking availability for Saturday')">Sat<strong>14</strong></div>
+            <div class="day-pill" onclick="alert('Checking availability for Sunday')">Sun<strong>15</strong></div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <h3>Current Queue</h3>
+          <div class="queue-list">
+            <div class="queue-item">
+              <div class="queue-info">
+                <h4>Projector 3</h4>
+                <span>10:00 AM - 12:00 PM</span>
+              </div>
+              <span class="badge badge-free">&bull; Free</span>
+            </div>
+
+            <div class="queue-item">
+              <div class="queue-info">
+                <h4>Group Study Room-B</h4>
+                <span>12:00 PM - 02:00 PM</span>
+              </div>
+              <span class="badge badge-booked">&bull; Booked</span>
+            </div>
+
+            <div class="queue-item">
+              <div class="queue-info">
+                <h4>Laptop 06</h4>
+                <span>02:00 PM - 04:00 PM</span>
+              </div>
+              <span class="badge badge-free">&bull; Free</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
+
